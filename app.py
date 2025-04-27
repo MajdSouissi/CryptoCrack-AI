@@ -6,12 +6,14 @@ from keras.models import load_model
 import pickle
 import json
 import nltk
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
 from nltk.stem import WordNetLemmatizer
 import random
 
-# Download required NLTK resources
-nltk.download('punkt', quiet=True)
-nltk.download('wordnet', quiet=True)
+
 
 # Initialize the lemmatizer for the chatbot
 lemmatizer = WordNetLemmatizer()
