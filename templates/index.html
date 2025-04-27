@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoCrack AI</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Chart.js pour les visualisations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Styles personnalisés -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-purple-900 min-h-screen text-white font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <!-- En-tête -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-12">
+            <div class="flex items-center mb-4 md:mb-0">
+                <div class="w-16 h-16 mr-4">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="CryptoCrack AI Logo" class="w-full h-full">
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                    CryptoCrack AI
+                </h1>
+            </div>
+            <div class="flex space-x-4">
+                <a href="{{ url_for('about') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition duration-300 flex items-center shadow-lg">
+                    <i class="fas fa-book mr-2"></i> à propos
+                </a>
+                <a href="{{ url_for('documentation') }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition duration-300 flex items-center shadow-lg">
+                    <i class="fas fa-book-open mr-2"></i>Documentation
+                </a>
+            </div>
+        </header>
+
+        <!-- Corps principal -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Panneau de gauche: Entrée -->
+            <div class="lg:col-span-1 bg-gray-800 bg-opacity-50 rounded-xl p-6 backdrop-filter backdrop-blur-lg border border-gray-700">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <i class="fas fa-keyboard mr-2 text-blue-400"></i>Entrée
+                </h2>
+
+                <!-- Mode sélection -->
+                <div class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-300">Mode</label>
+                    <div class="relative">
+                        <select id="mode-select" class="block w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-blue-500 focus:border-blue-500 appearance-none">
+                            <option value="decrypt">Déchiffrement</option>
+                            <option value="encrypt">Chiffrement</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nouvelle section pour les méthodes de déchiffrement (uniquement en mode déchiffrement) -->
+                <div id="decrypt-options" class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-300">Méthode de déchiffrement</label>
+                    <div class="relative">
+                        <select id="decrypt-method-select" class="block w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-blue-500 focus:border-blue-500 appearance-none">
+                            <option value="auto">Détection Automatique</option>
+                            <option value="caesar">César</option>
+                            <option value="vigenere">Vigenère</option>
+                            <option value="playfair">Playfair</option>
+                            <option value="rsa">RSA</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <p class="mt-1 text-xs text-gray-400">Sélectionnez une méthode spécifique ou laissez en "Détection Automatique"</p>
+                </div>
+
+                <!-- Options de chiffrement (visible uniquement en mode chiffrement) -->
+                <div id="encrypt-options" class="mb-6 hidden">
+                    <label class="block mb-2 text-sm font-medium text-gray-300">Type de chiffrement</label>
+                    <div class="relative">
+                        <select id="cipher-select" class="block w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-blue-500 focus:border-blue-500 appearance-none">
+                            <option value="caesar">César</option>
+                            <option value="vigenere">Vigenère</option>
+                            <option value="playfair">Playfair</option>
+                            <option value="rsa">RSA</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clé (visible uniquement en mode chiffrement) -->
+                <div id="key-input" class="mb-6 hidden">
+                    <label for="key" class="block mb-2 text-sm font-medium text-gray-300">Clé</label>
+                    <input type="text" id="key" class="block w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-blue-500 focus:border-blue-500">
+                    <p class="mt-1 text-xs text-gray-400" id="key-help">La clé dépend du type de chiffrement choisi.</p>
+                </div>
+
+                <!-- Zone de texte d'entrée -->
+                <div class="mb-6">
+                    <label for="input-text" class="block mb-2 text-sm font-medium text-gray-300">Texte</label>
+                    <textarea id="input-text" rows="8" class="block w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-blue-500 focus:border-blue-500 resize-none" placeholder="Entrez votre texte ici..."></textarea>
+                </div>
+
+                <!-- Bouton de traitement -->
+                <button id="process-btn" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-cogs mr-2"></i>
+                    <span id="process-btn-text">Déchiffrer</span>
+                </button>
+
+                <!-- Indicateur de chargement -->
+                <div id="loading" class="hidden mt-4 text-center">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+                    <p class="mt-2 text-sm text-gray-300">Traitement en cours...</p>
+                </div>
+            </div>
+
+            <!-- Panneau central: Résultat -->
+            <div class="lg:col-span-2 bg-gray-800 bg-opacity-50 rounded-xl p-6 backdrop-filter backdrop-blur-lg border border-gray-700">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <i class="fas fa-file-alt mr-2 text-purple-400"></i>Résultat
+                </h2>
+
+                <!-- Informations de détection (visible uniquement en mode déchiffrement) -->
+                <div id="detection-info" class="mb-6 p-4 bg-gray-900 bg-opacity-50 rounded-lg hidden">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-400">Type de chiffrement détecté</h3>
+                            <p id="detected-cipher" class="text-lg font-semibold text-white">-</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-400">Niveau de confiance</h3>
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-700 rounded-full h-2.5 mr-2">
+                                    <div id="confidence-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                                </div>
+                                <span id="confidence-value" class="text-sm font-medium">0%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-400">Langue détectée</h3>
+                            <p id="detected-language" class="text-white">-</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-400">Clé utilisée</h3>
+                            <p id="used-key" class="text-white">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Texte résultat -->
+                <div class="mb-6">
+                    <label for="result-text" class="block mb-2 text-sm font-medium text-gray-300">Texte traité</label>
+                    <div class="relative">
+                        <textarea id="result-text" rows="8" class="block w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-blue-500 focus:border-blue-500 resize-none" placeholder="Le résultat apparaîtra ici..." readonly></textarea>
+                        <button id="copy-btn" class="absolute right-2 top-2 bg-gray-700 hover:bg-gray-600 text-white rounded p-2 transition">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tableau de bord de visualisation -->
+                <div id="visualization-dashboard">
+                    <h3 class="text-lg font-semibold mb-3 flex items-center">
+                        <i class="fas fa-chart-bar mr-2 text-blue-400"></i>Analyse
+                    </h3>
+
+                    <!-- Onglets de visualisation -->
+                    <div class="flex border-b border-gray-700 mb-4">
+                        <button id="tab-frequency" class="tab-btn active py-2 px-4 border-b-2 border-blue-500 text-blue-400">Fréquences</button>
+                        <button id="tab-bigram" class="tab-btn py-2 px-4 text-gray-400 hover:text-white">Bigrammes</button>
+                        <button id="tab-entropy" class="tab-btn py-2 px-4 text-gray-400 hover:text-white">Entropie</button>
+                        <button id="tab-autocorr" class="tab-btn py-2 px-4 text-gray-400 hover:text-white">Autocorrélation</button>
+                    </div>
+
+                    <!-- Conteneurs de graphiques -->
+                    <div class="visualization-content" id="content-frequency">
+                        <canvas id="frequency-chart" class="w-full h-64"></canvas>
+                    </div>
+                    <div class="visualization-content hidden" id="content-bigram">
+                        <canvas id="bigram-chart" class="w-full h-64"></canvas>
+                    </div>
+                    <div class="visualization-content hidden" id="content-entropy">
+                        <canvas id="entropy-chart" class="w-full h-64"></canvas>
+                    </div>
+                    <div class="visualization-content hidden" id="content-autocorr">
+                        <canvas id="autocorr-chart" class="w-full h-64"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Pied de page -->
+        <footer class="mt-12 text-center text-gray-400 text-sm">
+            <p>CryptoCrack AI &copy; 2025. Tous droits réservés.</p>
+            <p class="mt-2">Conçu avec <i class="fas fa-heart text-red-500"></i> pour la cryptographie</p>
+        </footer>
+    </div>
+    <!-- Chat Button -->
+<div class="chat-button" id="chat-button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+</div>
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chat-widget">
+    <div class="chat-header">
+        <img src="/static/img/robot-logo.png" alt="Robot Logo" class="logo" style="width: 20%; height: auto;">
+        <h3><b> CryptoBot.ai</b></h3>
+        <button id="close-chat">×</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <div class="message bot-message">
+            Hello! How can I help you with cipher decryption today?
+        </div>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="user-message" placeholder="Type your message...">
+        <button id="send-message">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+        </button>
+    </div>
+</div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+/* Styles personnalisés pour Déchiffreur de Chiffre AI */
+body {
+    background: url("img/background.svg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Animation de focus pour les entrées */
+input:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    outline: none;
+}
+
+/* Animations pour les boutons */
+button {
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Style pour les onglets actifs */
+.tab-btn.active {
+    font-weight: 600;
+}
+
+.tab-btn:not(.active) {
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn:not(.active):hover {
+    border-bottom-color: rgba(99, 179, 237, 0.3);
+}
+
+/* Animation de pulsation pour le logo du site */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(66, 153, 225, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(66, 153, 225, 0);
+    }
+}
+
+header .rounded-full {
+    animation: pulse 2s infinite;
+}
+
+/* Style pour les cartes avec effet de verre */
+.backdrop-filter {
+    background-color: rgba(31, 41, 55, 0.7);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Particules de fond animées */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    animation: float 8s infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Style pour le message de succès */
+.success-message {
+    background-color: rgba(72, 187, 120, 0.2);
+    border-left: 4px solid #48bb78;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+
+/* Style pour le message d'erreur */
+.error-message {
+    background-color: rgba(245, 101, 101, 0.2);
+    border-left: 4px solid #f56565;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+
+/* Améliorations de la barre de confiance */
+#confidence-bar {
+    transition: width 0.5s ease-in-out;
+}
+
+/* Animation pour le chargement des résultats */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#result-text, #detection-info, .visualization-content {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Style pour les badges d'information */
+.info-badge {
+    display: inline-block;
+    background-color: rgba(66, 153, 225, 0.2);
+    color: #63b3ed;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+/* Effet de survol pour le bouton de copie */
+#copy-btn:hover {
+    background-color: #4a5568;
+}
+
+#copy-btn:hover i {
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+}
+
+/* Style pour les grands écrans */
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+/* Style pour les petits écrans */
+@media (max-width: 640px) {
+    .tab-btn {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+}
+/* Chat Button */
+.chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #2962ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.chat-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Chat Widget */
+/* Update your chat-widget rule in CSS */
+.chat-widget {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 350px;
+    height: 500px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    z-index: 998;
+    overflow: hidden;
+}
+
+
+.chat-header {
+    padding: 15px 20px;
+    background-color: #2962ff;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.chat-header button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 18px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.bot-message {
+    background-color: #f0f2f5;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+}
+
+.user-message {
+    background-color: #2962ff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.chat-input {
+    padding: 15px;
+    display: flex;
+    border-top: 1px solid #eaeaea;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+}
+
+.chat-input button {
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #2962ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

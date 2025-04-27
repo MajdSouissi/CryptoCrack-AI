@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoCrack AI - À Propos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-purple-900 min-h-screen text-white font-sans antialiased">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-white mb-4 tracking-tight">
+                <i class="fas fa-info-circle mr-3 text-yellow-400"></i>À Propos de CryptoCrack AI
+            </h1>
+            <p class="text-xl text-blue-200 max-w-2xl mx-auto">
+                L'histoire d'une passion née dans les salles de cours d'ingénierie
+            </p>
+        </header>
+
+        <section class="bg-white bg-opacity-10 rounded-xl shadow-2xl p-8 mb-8">
+            <h2 class="text-2xl font-bold text-yellow-300 mb-6 border-b-2 border-yellow-400 pb-3">
+                Origine du Projet
+            </h2>
+            <p class="text-blue-100 leading-relaxed mb-4">
+                Pendant notre cycle d'ingénieur, la cryptographie est rapidement devenue bien plus qu'un simple sujet académique. Chaque cours, chaque algorithme, chaque concept de sécurité des systèmes d'information nous a profondément fascinés. Ce n'était pas seulement une matière théorique, mais une discipline qui combinait mathématiques, informatique et sécurité de manière fascinante.
+            </p>
+            <p class="text-blue-100 leading-relaxed">
+                CryptoCrack AI est né de cette passion. Initialement conçu comme un projet personnel durant nos études, il est devenu un outil qui reflète notre désir de rendre la cryptographie accessible et compréhensible. Notre objectif était de créer une plateforme qui permet non seulement de chiffrer et déchiffrer des messages, mais aussi de comprendre les mécanismes complexes derrière ces processus.
+            </p>
+        </section>
+
+        <section class="bg-white bg-opacity-10 rounded-xl shadow-2xl p-8 mb-8">
+            <h2 class="text-2xl font-bold text-yellow-300 mb-6 border-b-2 border-yellow-400 pb-3">
+                Notre Engagement
+            </h2>
+            <ul class="space-y-4 text-blue-100">
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-green-400 mr-3"></i>
+                    Rendre la cryptographie accessible à tous
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-lock text-blue-400 mr-3"></i>
+                    Garantir la confidentialité et la sécurité des données
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-graduation-cap text-purple-400 mr-3"></i>
+                    Éduquer et sensibiliser à la sécurité numérique
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Footer avec les crédits -->
+    <footer class="bg-black bg-opacity-50 py-4 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-blue-300">
+                <i class="fas fa-code-branch mr-2"></i>Projet développé par Majd Souissi et Sana Riahi
+            </p>
+            <p class="text-blue-400 text-sm mt-2">
+                © 2023 CryptoCrack AI - Tous droits réservés
+            </p>
+        </div>
+    </footer>
+
+    <!-- Barre de navigation fixe en bas -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 flex justify-center space-x-6 z-50">
+        <a href="{{ url_for('index') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition duration-300 flex items-center shadow-lg">
+            <i class="fas fa-home mr-2"></i>Page d'Accueil
+        </a>
+        <a href="{{ url_for('documentation') }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition duration-300 flex items-center shadow-lg">
+            <i class="fas fa-book-open mr-2"></i>Documentation
+        </a>
+    </div>
+</body>
+</html>
